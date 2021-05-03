@@ -9,12 +9,14 @@ namespace Qubitech
     public class IP_Base_Airplane_Input : MonoBehaviour
     {
         #region variables
-        protected float pitch = 0f;
-        protected float roll = 0f;
-        protected float yaw = 0f;
-        protected float throttle = 0f;
+        public float pitch = 0f;
+        public float roll = 0f;
+        public float yaw = 0f;
+        public float throttle = 0f;
         protected int flap = 0;
-        protected float brake = 0f;
+        public int maxFlapIncrement =2;
+        public KeyCode brakeKey = KeyCode.Space;
+        public float brake = 0f;
         #endregion
 
 
@@ -67,7 +69,7 @@ namespace Qubitech
         // Update is called once per frame
         void Update()
         {
-
+            HandleInput();
         }
         #endregion
 
@@ -76,9 +78,25 @@ namespace Qubitech
 
         void HandleInput()
         {
+            //process main control input
             pitch = Input.GetAxis("Vertical");
             roll = Input.GetAxis("Horizontal");
+            yaw = Input.GetAxis("Yaw");
+            throttle = Input.GetAxis("Throttle");
 
+            //process break input
+            brake = Input.GetKey(brakeKey)? 1f:0f;
+            //Proces flap input
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                flap += 1;
+            }
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                flap -= 1;
+            }
+
+            flap = Mathf.Clamp(flap, 0, maxFlapIncrement);
         }
 
         #endregion
