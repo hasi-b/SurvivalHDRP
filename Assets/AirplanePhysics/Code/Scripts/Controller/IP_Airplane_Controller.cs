@@ -10,8 +10,12 @@ namespace Qubitech
         [Header("Base Airplane Properties")]
         public IP_Base_Airplane_Input input;
         [Tooltip("Airplane weight in KG")]
-        public float airplaneWeight = 800f;
+        public float airplaneWeight = 544f;
         public Transform centerOfGravity;
+        [Header("Airplane Engine")]
+        public List <IP_Airplane_Engine> engines = new List<IP_Airplane_Engine>();
+        [Header("Wheels")]
+        public List<IP_Airplane_Wheel> wheels = new List<IP_Airplane_Wheel>();
 
         #endregion
 
@@ -26,9 +30,20 @@ namespace Qubitech
                 rb.mass = airplaneWeight;
                 if(centerOfGravity)
                 {
-                    rb.centerOfMass = centerOfGravity.localPosition;
+                    rb.centerOfMass = centerOfGravity.localPosition; // assigning the center of gravity of the plane from the inspector
                 }
 
+            }
+
+            if(wheels!= null)
+            {
+                if (wheels.Count > 0)
+                {
+                    foreach(IP_Airplane_Wheel wheel in wheels)
+                    {
+
+                    }
+                }
             }
 
         }
@@ -52,6 +67,18 @@ namespace Qubitech
 
         void HandleEngine()
         {
+            if(engines!= null)
+            {
+                if (engines.Count > 0)
+                {
+                    foreach(IP_Airplane_Engine engine in engines)
+                    {
+
+                    }
+                }
+            }
+
+
 
         }
         void HandleAeroDynamics()
