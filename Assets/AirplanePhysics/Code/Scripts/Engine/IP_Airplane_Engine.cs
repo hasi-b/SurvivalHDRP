@@ -12,9 +12,11 @@ namespace Qubitech
         [Header("Engine Properties")]
         public float maxForce = 10000f;
         public float maxRPM = 2550f;
+        public IP_Airplane_Controller airPlaneController;
         public AnimationCurve powerCurve = AnimationCurve.Linear(0f,0f,1f,1f);
         [Header("Propeller")]
         public IP_Airplane_Propeller propeller;
+        
 
         #endregion
         #region Builtin Methods
@@ -29,7 +31,9 @@ namespace Qubitech
 
             finalThrottle = powerCurve.Evaluate(finalThrottle);
             //calculating RPM of the propeller
-            float currentRPM = finalThrottle * maxRPM;
+            
+                float currentRPM = airPlaneController.maxxforce * maxRPM;
+            
             if (propeller)
             {
                 propeller.HandlePropeller(currentRPM);

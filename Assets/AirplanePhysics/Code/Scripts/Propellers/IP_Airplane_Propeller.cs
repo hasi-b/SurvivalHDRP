@@ -8,6 +8,7 @@ namespace Qubitech
     {
 
         #region variables
+        public float minDPS = 0.5f;
        // private Rigidbody rb;
 
 
@@ -26,10 +27,15 @@ namespace Qubitech
 
         public void HandlePropeller(float currentRPM)
         {
-            float DPS = (currentRPM * 360f) / 60f * Time.deltaTime;
+            
+              float DPS = (currentRPM * 360f) / 60f * Time.deltaTime;
+            //Debug.Log("DPS " + DPS);
             //Vector3 finalDPS = Vector3.forward * DPS;
             //rb.AddTorque(finalDPS);
-            transform.Rotate(Vector3.forward, DPS);
+            if (DPS > minDPS)
+            {
+                transform.Rotate(Vector3.forward, DPS);
+            }
         }
 
         #endregion

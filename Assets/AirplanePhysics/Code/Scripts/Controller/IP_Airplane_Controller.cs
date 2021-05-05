@@ -11,6 +11,8 @@ namespace Qubitech
         public IP_Base_Airplane_Input input;
         [Tooltip("Airplane weight in KG")]
         public float airplaneWeight = 544f;
+        public float maxxforce;
+        
         public Transform centerOfGravity;
         [Header("Airplane Engine")]
         public List <IP_Airplane_Engine> engines = new List<IP_Airplane_Engine>();
@@ -41,7 +43,7 @@ namespace Qubitech
                 {
                     foreach(IP_Airplane_Wheel wheel in wheels)
                     {
-                        wheel.InitWheel();
+                        wheel.InitWheel();  
                     }
                 }
             }
@@ -77,6 +79,7 @@ namespace Qubitech
                     foreach(IP_Airplane_Engine engine in engines)
                     {
                        rb.AddForce(engine.CalculateForce(input.Throttle));
+                        maxxforce = rb.velocity.magnitude / 14.853f;
                     }
                 }
             }

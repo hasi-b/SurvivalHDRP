@@ -874,6 +874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 1180764310}
   airplaneWeight: 600
+  maxxforce: 0
   centerOfGravity: {fileID: 857099366}
   engines:
   - {fileID: 1686232044}
@@ -1395,6 +1396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxForce: 10000
   maxRPM: 2550
+  airPlaneController: {fileID: 1180764311}
   powerCurve:
     serializedVersion: 2
     m_Curve:
