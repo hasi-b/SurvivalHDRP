@@ -41,7 +41,7 @@ namespace Qubitech
                 {
                     foreach(IP_Airplane_Wheel wheel in wheels)
                     {
-
+                        wheel.InitWheel();
                     }
                 }
             }
@@ -57,11 +57,14 @@ namespace Qubitech
 
         protected override void HandlePhysics()
         {
-            HandleEngine();
-            HandleAeroDynamics();
-            HandleSteering();
-            HandleBrakes();
-            HandleAltitude();
+            if (input)
+            {
+                HandleEngine();
+                HandleAeroDynamics();
+                HandleSteering();
+                HandleBrakes();
+                HandleAltitude();
+            }
         }
 
 
@@ -73,7 +76,7 @@ namespace Qubitech
                 {
                     foreach(IP_Airplane_Engine engine in engines)
                     {
-
+                       rb.AddForce(engine.CalculateForce(input.Throttle));
                     }
                 }
             }

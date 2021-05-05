@@ -9,14 +9,14 @@ namespace Qubitech
     public class IP_Base_Airplane_Input : MonoBehaviour
     {
         #region variables
-        public float pitch = 0f;
-        public float roll = 0f;
-        public float yaw = 0f;
-        public float throttle = 0f;
+        protected float pitch = 0f;
+        protected float roll = 0f;
+        protected float yaw = 0f;
+        protected float throttle = 0f;
         protected int flap = 0;
-        public int maxFlapIncrement =2;
+        protected int maxFlapIncrement =2;
         public KeyCode brakeKey = KeyCode.Space;
-        public float brake = 0f;
+        protected float brake = 0f;
         #endregion
 
 
