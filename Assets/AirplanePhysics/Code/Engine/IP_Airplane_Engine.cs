@@ -10,6 +10,7 @@ namespace Qubitech
         #region variables
         public float maxForce = 200f;
         public float maxRPM = 2550f;
+        public AnimationCurve powerCurve = AnimationCurve.Linear(0f,0f,1f,1f);
 
         #endregion
         #region Builtin Methods
@@ -20,6 +21,9 @@ namespace Qubitech
         public Vector3 CalculateForce(float  throttle)
         {
             float finalThrottle = Mathf.Clamp01(throttle);
+
+            finalThrottle = powerCurve.Evaluate(finalThrottle);
+
             float finalPower = throttle * maxForce;
 
             Vector3 finalForce = transform.forward * finalPower;
