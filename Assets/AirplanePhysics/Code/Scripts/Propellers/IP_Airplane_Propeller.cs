@@ -8,6 +8,17 @@ namespace Qubitech
     {
 
         #region variables
+        [Header("Propeller Properties")]
+        public float minQuadRPMs = 300f;
+        public float minTextureSwap = 600f;
+        public GameObject mainProp;
+        public GameObject blurredProp;
+
+        [Header("Material Properties")]
+        public Material blurredPropMat;
+        public Texture2D blurLevel1;
+        public Texture2D blurLevel2;
+
         public float minDPS = 0.5f;
        // private Rigidbody rb;
 
@@ -19,7 +30,13 @@ namespace Qubitech
 
         private void Start()
         {
-           // rb = GetComponent<Rigidbody>();
+            // rb = GetComponent<Rigidbody>();
+            if (mainProp && blurredProp)
+            {
+                HandleSwapping(0f);
+            }
+            
+
         }
         #endregion
 
@@ -34,9 +51,47 @@ namespace Qubitech
             //rb.AddTorque(finalDPS);
             if (DPS > minDPS)
             {
+                
                 transform.Rotate(Vector3.forward, DPS);
             }
+            if (mainProp && blurredProp)
+            {
+                HandleSwapping(currentRPM);
+            }
+
         }
+
+        void HandleSwapping(float currentRPM)
+        {
+            if (currentRPM > minQuadRPMs)
+            {
+                blurredProp.gameObject.SetActive(true);
+                mainProp.gameObject.SetActive(false);
+
+                if (blurredPropMat  && blurLevel1 && blurLevel2)
+                {
+                    if (currentRPM > minTextureSwap)
+                    {
+                        blurredPropMat.SetTexture("_BaseColorMap", blurLevel2);
+
+                    }
+                    else
+                    {
+                        blurredPropMat.SetTexture("_BaseColorMap", blurLevel1);
+                    }
+                }
+               
+
+            }
+            else
+            {
+
+                blurredProp.gameObject.SetActive(false);
+                mainProp.gameObject.SetActive(true);
+            }
+        }
+
+        
 
         #endregion
     }
