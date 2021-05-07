@@ -15,8 +15,18 @@ namespace Qubitech
         protected float throttle = 0f;
         protected int flap = 0;
         protected int maxFlapIncrement =2;
-        public KeyCode brakeKey = KeyCode.Space;
+        [SerializeField]
+        protected KeyCode brakeKey = KeyCode.Space;
         protected float brake = 0f;
+
+
+        public float throttleSpeed = 0.1f;
+        private float stickyThrottle;
+        public float StickyThrottle
+        {
+            get { return StickyThrottle; }
+        }
+
         #endregion
 
 
@@ -84,6 +94,8 @@ namespace Qubitech
             yaw = Input.GetAxis("Yaw");
             throttle = Input.GetAxis("Throttle");
 
+            StickyThrottleControl();
+
             //process break input
             brake = Input.GetKey(brakeKey)? 1f:0f;
             //Proces flap input
@@ -98,6 +110,14 @@ namespace Qubitech
 
             flap = Mathf.Clamp(flap, 0, maxFlapIncrement);
         }
+
+
+        void StickyThrottleControl()
+        {
+            stickyThrottle = stickyThrottle + (-throttle*throttleSpeed*Time.deltaTime) ;
+            stickyThrottle = Mathf.Clamp01(stickyThrottle);
+        }
+
 
         #endregion
 

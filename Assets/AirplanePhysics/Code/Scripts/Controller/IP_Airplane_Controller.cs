@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace Qubitech
 {
+    [RequireComponent(typeof(IP_Airplane_Characteristics))]
     public class IP_Airplane_Controller : IP_Base_Rigidbody_Controller
     {
         #region variables
         [Header("Base Airplane Properties")]
         public IP_Base_Airplane_Input input;
+        public IP_Airplane_Characteristics characteristics;
         [Tooltip("Airplane weight in KG")]
         public float airplaneWeight = 544f;
         public float maxxforce;
@@ -34,7 +36,11 @@ namespace Qubitech
                 {
                     rb.centerOfMass = centerOfGravity.localPosition; // assigning the center of gravity of the plane from the inspector
                 }
-
+                characteristics = GetComponent<IP_Airplane_Characteristics>();
+                if (characteristics)
+                {
+                    characteristics.IniCharacteristics(rb);
+                }
             }
 
             if(wheels!= null)
@@ -47,6 +53,7 @@ namespace Qubitech
                     }
                 }
             }
+           
 
         }
 
@@ -62,7 +69,7 @@ namespace Qubitech
             if (input)
             {
                 HandleEngine();
-                HandleAeroDynamics();
+                HandleCharacteristics();
                 HandleSteering();
                 HandleBrakes();
                 HandleAltitude();
@@ -87,9 +94,12 @@ namespace Qubitech
 
 
         }
-        void HandleAeroDynamics()
+        void HandleCharacteristics()
         {
-
+            if (characteristics)
+            {
+                characteristics.UpdateCharacteristics();
+            }
         }
         void HandleSteering()
         {

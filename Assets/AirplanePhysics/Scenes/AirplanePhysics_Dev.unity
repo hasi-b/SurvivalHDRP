@@ -873,6 +873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brakeKey: 32
+  throttleSpeed: 0.1
 --- !u!114 &1180764311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,6 +887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 1180764310}
+  characteristics: {fileID: 1180764313}
   airplaneWeight: 600
   maxxforce: 0
   centerOfGravity: {fileID: 857099366}
@@ -991,6 +993,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1180764313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180764307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6301e182271462c4f83f0fe74d094ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardSpeed: 0
+  mph: 0
+  mpsToMph: 2.23694
 --- !u!1 &1280978291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,7 +1739,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1901977937

@@ -18,7 +18,7 @@ namespace Qubitech
         public Material blurredPropMat;
         public Texture2D blurLevel1;
         public Texture2D blurLevel2;
-
+     
         public float minDPS = 0.5f;
        // private Rigidbody rb;
 
@@ -30,9 +30,11 @@ namespace Qubitech
 
         private void Start()
         {
+
             // rb = GetComponent<Rigidbody>();
             if (mainProp && blurredProp)
             {
+                
                 HandleSwapping(0f);
             }
             
@@ -51,8 +53,9 @@ namespace Qubitech
             //rb.AddTorque(finalDPS);
             if (DPS > minDPS)
             {
+               
+                    transform.Rotate(Vector3.forward, DPS);
                 
-                transform.Rotate(Vector3.forward, DPS);
             }
             if (mainProp && blurredProp)
             {
