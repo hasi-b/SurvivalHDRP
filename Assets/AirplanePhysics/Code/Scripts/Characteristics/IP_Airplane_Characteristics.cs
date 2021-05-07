@@ -25,6 +25,8 @@ namespace Qubitech
         private float maxMPS;
         private float normalizeKMPH;
 
+        private float angleOfAttack;
+
         #endregion
         #region Constants
         public float mpsToMph = 2.23694f;
@@ -61,6 +63,7 @@ namespace Qubitech
                 CalculateForwardSpeed();
                 CalculateDrag();
                 CalculateLift();
+                HandleRigidbodyTransform();
             }
         }
 
@@ -78,11 +81,17 @@ namespace Qubitech
         }
         void CalculateLift()
         {
+
+            angleOfAttack = Vector3.Dot(rb.velocity.normalized,transform.forward);
+            angleOfAttack += angleOfAttack;
+
+
+
             Vector3 liftDir = transform.up;
             float liftPower = liftCurve.Evaluate(normalizeKMPH) * maxliftPower;
 
 
-            Vector3 finalLift = liftDir * liftPower;
+            Vector3 finalLift = liftDir * liftPower*angleOfAttack;
             rb.AddForce(finalLift);
         }
         void CalculateDrag()
@@ -94,6 +103,22 @@ namespace Qubitech
             rb.angularDrag = finalAngularDrag;
 
         }
+
+        void HandleRigidbodyTransform()
+        {
+            if (rb.velocity.magnitude > 1f)
+            {
+                Vector3 updatedVelocity = Vector3.Lerp(rb.velocity,transform.forward*forwardSpeed,forwardSpeed*angleOfAttack*Time.deltaTime);
+                rb.velocity = updatedVelocity;
+
+                Quaternion updatedRotation = Quaternion.Slerp(rb.rotation,Quaternion.LookRotation(rb.velocity.normalized,transform.up),Time.deltaTime);
+                rb.MoveRotation(updatedRotation);
+
+            }
+
+
+        }
+
 
 
         #endregion
