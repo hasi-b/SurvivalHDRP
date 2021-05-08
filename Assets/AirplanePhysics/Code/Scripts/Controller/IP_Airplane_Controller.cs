@@ -21,6 +21,8 @@ namespace Qubitech
         [Header("Wheels")]
         public List<IP_Airplane_Wheel> wheels = new List<IP_Airplane_Wheel>();
 
+        [Header("Control Surfaces")]
+        public List<Airplane_Control_Surffaces> control_Surffaces = new List<Airplane_Control_Surffaces>();
         #endregion
 
         #region built in methods
@@ -39,7 +41,7 @@ namespace Qubitech
                 characteristics = GetComponent<IP_Airplane_Characteristics>();
                 if (characteristics)
                 {
-                    characteristics.IniCharacteristics(rb);
+                    characteristics.IniCharacteristics(rb,input);
                 }
             }
 
@@ -70,6 +72,7 @@ namespace Qubitech
             {
                 HandleEngine();
                 HandleCharacteristics();
+                HandleControlSurfaces();
                 HandleSteering();
                 HandleBrakes();
                 HandleAltitude();
@@ -85,7 +88,10 @@ namespace Qubitech
                 {
                     foreach(IP_Airplane_Engine engine in engines)
                     {
-                       rb.AddForce(engine.CalculateForce(input.Throttle));
+                        
+                        
+                            rb.AddForce(engine.CalculateForce(input.Throttle));
+                        
                         maxxforce = rb.velocity.magnitude / 14.853f;
                     }
                 }
@@ -101,6 +107,19 @@ namespace Qubitech
                 characteristics.UpdateCharacteristics();
             }
         }
+
+
+        void HandleControlSurfaces()
+        {
+            if (control_Surffaces.Count > 0)
+            {
+                foreach (Airplane_Control_Surffaces controlSurfaces in control_Surffaces)
+                {
+                    controlSurfaces.HandleControlSurface(input);
+                }
+            }
+        }
+
         void HandleSteering()
         {
 

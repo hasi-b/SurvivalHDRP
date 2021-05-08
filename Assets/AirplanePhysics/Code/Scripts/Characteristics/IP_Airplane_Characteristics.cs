@@ -17,6 +17,15 @@ namespace Qubitech
         [Header("Drag Characteristics")]
         float dragfactor = 0.01f;
 
+
+        [Header("Control Properties")]
+        public float pitchSpeed = 4000f;
+        public float rollSpeed = 4000f;
+        public float YawSpeed = 1000f;
+        public float rbLerpSpeed = 0.2f;
+
+
+        private IP_Base_Airplane_Input input;
         private Rigidbody rb;
         private float startDrag;
         private float startAngularDrag;
@@ -26,6 +35,9 @@ namespace Qubitech
         private float normalizeKMPH;
 
         private float angleOfAttack;
+        private float pitchAngle;
+        private float rollAngle;
+
 
         #endregion
         #region Constants
@@ -46,8 +58,10 @@ namespace Qubitech
         }
         #endregion
         #region Custom Method
-        public void IniCharacteristics(Rigidbody curRb)
+        public void IniCharacteristics(Rigidbody curRb, IP_Base_Airplane_Input curInput)
         {
+            input = curInput;
+
             rb = curRb;
             startDrag = rb.drag;
             startAngularDrag = rb.angularDrag;
@@ -63,6 +77,11 @@ namespace Qubitech
                 CalculateForwardSpeed();
                 CalculateDrag();
                 CalculateLift();
+                HandlePitch();
+                HandleRoll();
+                HandleYaw();
+                HandleBanking();
+
                 HandleRigidbodyTransform();
             }
         }
@@ -108,10 +127,10 @@ namespace Qubitech
         {
             if (rb.velocity.magnitude > 1f)
             {
-                Vector3 updatedVelocity = Vector3.Lerp(rb.velocity,transform.forward*forwardSpeed,forwardSpeed*angleOfAttack*Time.deltaTime);
+                Vector3 updatedVelocity = Vector3.Lerp(rb.velocity,transform.forward*forwardSpeed,forwardSpeed*angleOfAttack*Time.deltaTime*rbLerpSpeed);
                 rb.velocity = updatedVelocity;
 
-                Quaternion updatedRotation = Quaternion.Slerp(rb.rotation,Quaternion.LookRotation(rb.velocity.normalized,transform.up),Time.deltaTime);
+                Quaternion updatedRotation = Quaternion.Slerp(rb.rotation,Quaternion.LookRotation(rb.velocity.normalized,transform.up),Time.deltaTime*rbLerpSpeed);
                 rb.MoveRotation(updatedRotation);
 
             }
@@ -119,7 +138,47 @@ namespace Qubitech
 
         }
 
+        void HandlePitch()
+        {
+            Vector3 flatForward = transform.forward;
+            flatForward.y = 0f;
+            flatForward = flatForward.normalized;
+            pitchAngle = Vector3.Angle(transform.forward, flatForward);
+            // Debug.Log("PitchAngel = " +pitchAngle);
 
+            Vector3 pitchTorque = input.Pitch * pitchSpeed * transform.right;
+
+            rb.AddTorque(pitchTorque);
+
+
+        }
+
+        void HandleRoll()
+        {
+            Vector3 flatRight = transform.right;
+            flatRight.y = 0f;
+            flatRight = flatRight.normalized;
+            rollAngle = Vector3.SignedAngle(transform.right, flatRight, transform.forward);
+
+            Vector3 rollTorque = -input.Roll * rollSpeed * transform.forward;
+            rb.AddTorque(rollTorque);
+
+        }
+
+        void HandleYaw()
+        {
+            Vector3 yawTorque = input.Yaw * YawSpeed * transform.up;
+            rb.AddTorque(yawTorque);
+        }
+
+
+        void HandleBanking()
+        {
+            float bankSide = Mathf.InverseLerp(-90f,90f, rollAngle);
+            float bankAmount = Mathf.Lerp(-1f, 1f, bankSide);
+            Vector3 bankTorque = bankAmount * rollSpeed * transform.up;
+            rb.AddTorque(bankTorque);
+        }
 
         #endregion
     }

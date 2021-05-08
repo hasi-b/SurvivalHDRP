@@ -39,7 +39,7 @@ namespace Qubitech
                 propeller.HandlePropeller(currentRPM);
             }
             //calculating force and creating
-            float finalPower = throttle * maxForce;
+            float finalPower = finalThrottle * maxForce;
 
             Vector3 finalForce = transform.forward * finalPower;
             return finalForce;
