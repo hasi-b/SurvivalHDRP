@@ -9,6 +9,8 @@ namespace Qubitech
 
         #region variables
         [Header("Propeller Properties")]
+        public float minRotationRPM = 30f;
+
         public float minQuadRPMs = 300f;
         public float minTextureSwap = 600f;
         public GameObject mainProp;
@@ -30,7 +32,7 @@ namespace Qubitech
 
         private void Start()
         {
-
+            
             // rb = GetComponent<Rigidbody>();
             if (mainProp && blurredProp)
             {
@@ -53,9 +55,13 @@ namespace Qubitech
             //rb.AddTorque(finalDPS);
             if (DPS > minDPS)
             {
-               
+                    
                     transform.Rotate(Vector3.forward, DPS);
                 
+            }
+            else
+            {
+                transform.Rotate(Vector3.forward, 1);
             }
             if (mainProp && blurredProp)
             {

@@ -24,7 +24,7 @@ namespace Qubitech
         private float stickyThrottle;
         public float StickyThrottle
         {
-            get { return StickyThrottle; }
+            get { return stickyThrottle; }
         }
 
         #endregion

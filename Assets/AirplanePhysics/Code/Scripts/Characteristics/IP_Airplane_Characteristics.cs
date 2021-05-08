@@ -15,7 +15,9 @@ namespace Qubitech
         public AnimationCurve liftCurve = AnimationCurve.EaseInOut(0f,0f,1f,1f);
 
         [Header("Drag Characteristics")]
-        float dragfactor = 0.01f;
+        public float dragfactor = 0.0004f;
+        public float flapDragFactor = 0.0002f;
+
 
 
         [Header("Control Properties")]
@@ -116,7 +118,9 @@ namespace Qubitech
         void CalculateDrag()
         {
             float speedDrag = forwardSpeed * dragfactor;
-            float finalDrag = speedDrag + startDrag;
+
+            float flapDrag = input.Flap*flapDragFactor;
+            float finalDrag = speedDrag + startDrag + flapDrag;
             float finalAngularDrag = speedDrag + startAngularDrag;
             rb.drag = finalDrag;
             rb.angularDrag = finalAngularDrag;
@@ -128,7 +132,7 @@ namespace Qubitech
             if (rb.velocity.magnitude > 1f)
             {
                 Vector3 updatedVelocity = Vector3.Lerp(rb.velocity,transform.forward*forwardSpeed,forwardSpeed*angleOfAttack*Time.deltaTime*rbLerpSpeed);
-                rb.velocity = updatedVelocity;
+               // rb.velocity = updatedVelocity;
 
                 Quaternion updatedRotation = Quaternion.Slerp(rb.rotation,Quaternion.LookRotation(rb.velocity.normalized,transform.up),Time.deltaTime*rbLerpSpeed);
                 rb.MoveRotation(updatedRotation);

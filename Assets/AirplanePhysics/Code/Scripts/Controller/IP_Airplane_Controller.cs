@@ -73,8 +73,7 @@ namespace Qubitech
                 HandleEngine();
                 HandleCharacteristics();
                 HandleControlSurfaces();
-                HandleSteering();
-                HandleBrakes();
+                HandleWheels();
                 HandleAltitude();
             }
         }
@@ -120,19 +119,22 @@ namespace Qubitech
             }
         }
 
-        void HandleSteering()
+        void HandleWheels()
         {
-
-        }
-        void HandleBrakes()
-        {
-
+            if (wheels.Count > 0)
+            {
+                foreach(IP_Airplane_Wheel wheel in wheels)
+                {
+                    wheel.HandleWheel(input);
+                }
+            }
         }
 
         void HandleAltitude()
         {
 
         }
+
 
 
         #endregion
