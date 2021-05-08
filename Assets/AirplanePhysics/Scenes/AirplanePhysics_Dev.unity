@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxGroundDistance: 3
   liftForce: 1000
-  maxSpeed: 20
+  maxSpeed: 60
 --- !u!114 &1180764318 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1180764310, guid: 8280a80d38f46dd4488759a0d11a75e0, type: 3}
@@ -2569,6 +2569,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1180764311, guid: 8280a80d38f46dd4488759a0d11a75e0, type: 3}
+      propertyPath: airplaneWeight
+      value: 1200
+      objectReference: {fileID: 0}
     - target: {fileID: 1180764313, guid: 8280a80d38f46dd4488759a0d11a75e0, type: 3}
       propertyPath: flapDragFactor
       value: 0.5
