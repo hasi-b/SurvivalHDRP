@@ -1099,7 +1099,7 @@ Rigidbody:
   m_GameObject: {fileID: 1180764307}
   serializedVersion: 2
   m_Mass: 800
-  m_Drag: 2
+  m_Drag: 0.4
   m_AngularDrag: 3
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 1180764310}
   characteristics: {fileID: 1180764313}
-  airplaneWeight: 800
+  airplaneWeight: 1200
   maxxforce: 0
   centerOfGravity: {fileID: 857099366}
   engines:
