@@ -19,6 +19,11 @@ namespace Qubitech
         public float maxPitchValue = 1.2f;
         private float finalPitchValue;
 
+        public float FinalVolume
+        {
+            get { return finalVolume; }
+        }
+
         #endregion
         #region Builtin Methods
         
