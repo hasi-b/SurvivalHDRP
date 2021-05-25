@@ -12,6 +12,7 @@ namespace Qubitech
 
         
         public Volume volume;
+        
         VolumeProfile volumeProfile;
         public IP_Airplane_Controller controller;
         public AnimationCurve ChromaticCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
@@ -44,7 +45,7 @@ namespace Qubitech
                 chrom = volumeProfile.Add<ChromaticAberration>();
             }
 
-            Debug.Log("ch "+chrom.intensity.value);
+            
 
             chrom.intensity.value = ChromaticCurve.Evaluate(controller.maxxforce);
 

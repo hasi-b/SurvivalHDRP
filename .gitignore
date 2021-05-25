@@ -58,3 +58,18 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+*.cginc
+*.shadersubgraph
+*.asset
+*.exr
+*.tga
+*.png
+*.hlsl
+*.psd
+*.jpg
+*.unity
+*.mat
+*.FBX
+*.meta
+*.shader
+*.asset

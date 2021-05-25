@@ -18,12 +18,17 @@ namespace Qubitech
         public float steerSmoothSpeed = 2f;
 
 
-        private WheelCollider wheelCol;
+        public WheelCollider wheelCol;
         private Vector3 worldPos;
         private Quaternion worldRot;
         private float finalBreakForce;
         private float finalSteerAngle;
+        private bool isGrounded;
 
+        public bool IsGrounded
+        {
+            get { return isGrounded; }
+        }
         #endregion
 
 
@@ -41,8 +46,38 @@ namespace Qubitech
     // Update is called once per frame
         void Update()
         {
-        
+           /* if (wheelCol.isGrounded)
+            {
+                Debug.Log("Grounded");
+            } */
         }
+
+        /*private void OnTriggerStay(Collider other)
+        {
+            if (other.tag == "ground")
+            {
+                isGrounded = true;
+                Debug.Log("Grounded");
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.collider.tag == "ground")
+            {
+                isGrounded = true;
+                Debug.Log("Grounded");
+                Debug.Log("Collider"+ collision.collider.tag );
+            }
+            else
+            {
+                isGrounded = false;
+            }
+        }
+        */
+
+        
+
         #endregion
 
 
