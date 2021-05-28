@@ -28,6 +28,8 @@ namespace Qubitech
         IP_Airplane_Wheel iWheel;
         IP_Base_Airplane_Input input;
         float collisionCounter=0f;
+        public GameObject mainCam;
+        Airplane_Camera air_cam;
         
 
         #endregion
@@ -37,10 +39,11 @@ namespace Qubitech
         // Start is called before the first frame update
         void Start()
         {
-            
+            air_cam = mainCam.GetComponent<Airplane_Camera>();
             input= Airplane.GetComponent<IP_Base_Airplane_Input>();
             iWheel = wheel.GetComponent<IP_Airplane_Wheel>();
             input.enabled = false;
+            air_cam.enabled = false;
             playerTransform = player.GetComponent<Transform>();
             airPlaneTransform = Airplane.GetComponent<Transform>();
         }
@@ -71,7 +74,8 @@ namespace Qubitech
             cmCam.SetActive(false);
             
             player.SetActive(false);
-            
+            air_cam.enabled = true;
+
             TextTMP.SetActive(false);
             input.enabled = true;
         }
@@ -81,7 +85,7 @@ namespace Qubitech
             Debug.Log("Plane Exited");
             cmCam.SetActive(true);
             player.SetActive(true);
-            
+            air_cam.enabled = false;
             
             
             input.enabled = false;
@@ -105,7 +109,7 @@ namespace Qubitech
             else
             {
                 collisionCounter++;
-                if (collisionCounter>100f) 
+                if (collisionCounter>100f) // This is fixing the weird behaviour of this text geetting disabled
                 {
                     TextTMP.SetActive(false);
                     collisionCounter = 0f;

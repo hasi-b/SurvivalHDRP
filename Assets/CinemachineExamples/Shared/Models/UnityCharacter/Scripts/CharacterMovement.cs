@@ -48,12 +48,12 @@ public class CharacterMovement : MonoBehaviour
 
         speed = Mathf.Clamp(speed, 0f, 1f);
         speed = Mathf.SmoothDamp(anim.GetFloat("Speed"), speed, ref velocity, 0.1f);
-        anim.SetFloat("Speed", speed);
+        //anim.SetFloat("Speed", speed);
 
 	    if (input.y < 0f && keepDirection) direction = input.y;
 	    else direction = 0f;
         
-        anim.SetFloat("Direction", direction);
+        //anim.SetFloat("Direction", direction);
 	    
 
         // set sprinting
