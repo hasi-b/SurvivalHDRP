@@ -60,14 +60,14 @@ namespace Qubitech
 
             if (Entered)
             {
-                if (Input.GetKeyDown(KeyCode.E) && !inPLane)
+                if (Input.GetKeyDown(KeyCode.F) && !inPLane)
                 {
                     
                     enterPlane();
                     inPLane = true;
                 }
 
-                else if (input.enabled && iWheel.wheelCol.isGrounded && inPLane && Input.GetKeyDown(KeyCode.E))
+                else if (input.enabled && iWheel.wheelCol.isGrounded && inPLane && Input.GetKeyDown(KeyCode.F))
                 {
                     exitPLane();
                     inPLane = false;
