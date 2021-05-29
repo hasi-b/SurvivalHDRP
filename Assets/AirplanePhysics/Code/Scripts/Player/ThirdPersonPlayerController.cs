@@ -54,8 +54,10 @@ namespace Qubitech
             }
             else
             {
+                Debug.Log("Grounded!");
                 mspeedY = 0f;
             }
+
 
 
             Vector3 movement = new Vector3(x, 0f, z).normalized;

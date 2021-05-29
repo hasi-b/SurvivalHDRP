@@ -30,6 +30,9 @@ namespace Qubitech
         float collisionCounter=0f;
         public GameObject mainCam;
         Airplane_Camera air_cam;
+        float airplane_X,airplane_Y,airplane_Z;
+        bool Entered;
+        bool inPLane;
         
 
         #endregion
@@ -51,17 +54,45 @@ namespace Qubitech
         // Update is called once per frame
         void Update()
         {
-            Debug.Log("COl"+collisionCounter);
+            airplane_X = airPlaneTransform.position.x + 4.841f;
+            airplane_Y = airPlaneTransform.position.y - 1.55f;
+            airplane_Z = airPlaneTransform.position.z - 1.815f;
+
+            if (Entered)
+            {
+                if (Input.GetKeyDown(KeyCode.E) && !inPLane)
+                {
+                    
+                    enterPlane();
+                    inPLane = true;
+                }
+
+                else if (input.enabled && iWheel.wheelCol.isGrounded && inPLane && Input.GetKeyDown(KeyCode.E))
+                {
+                    exitPLane();
+                    inPLane = false;
+                }
+
+
+            }
+
+
+
+
+
         }
 
       
-        private void OnTriggerStay(Collider other)
+       
+        private void OnTriggerEnter(Collider other)
         {
-            colliderCalculation(other);
-            
-
-
+            colliderCalculation(other, true);
         }
+        private void OnTriggerExit(Collider other)
+        {
+            colliderCalculation(other, false);
+        }
+
 
         #endregion
 
@@ -84,12 +115,13 @@ namespace Qubitech
 
             Debug.Log("Plane Exited");
             cmCam.SetActive(true);
+            playerTransform.position = new Vector3(airplane_X, airplane_Y, airplane_Z);
             player.SetActive(true);
             air_cam.enabled = false;
             
             
             input.enabled = false;
-            playerTransform.position = new Vector3(airPlaneTransform.position.x+4.841f,airPlaneTransform.position.y-1.55f,airPlaneTransform.position.z - 1.815f);
+            
             
         }
 
@@ -99,33 +131,29 @@ namespace Qubitech
             Debug.Log("Entered");
         }
 
-        void colliderCalculation(Collider other)
+        void colliderCalculation(Collider other, bool enter)
         {
-            if (other.tag == "Player")
+            if (other.tag == "Player" && enter == true)
             {
                 
                 showUI();
+                Entered = true;
+               
+
             }
-            else
+            else if(other.tag == "Player" && enter == false)
             {
-                collisionCounter++;
-                if (collisionCounter>100f) // This is fixing the weird behaviour of this text geetting disabled
-                {
+                
+                
                     TextTMP.SetActive(false);
-                    collisionCounter = 0f;
-                }
+                Entered = false;
+                    
             }
 
 
-            if (Input.GetKeyDown(KeyCode.E) && other.tag == "Player")
-            {
-                enterPlane();
-            }
+           
 
-            if (input.enabled && iWheel.wheelCol.isGrounded && Input.GetKeyDown(KeyCode.F))
-            {
-                exitPLane();
-            }
+            
         }
 
 
