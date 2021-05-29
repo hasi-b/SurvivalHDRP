@@ -31,7 +31,7 @@ namespace Qubitech
         public GameObject mainCam;
         Airplane_Camera air_cam;
         float airplane_X,airplane_Y,airplane_Z;
-        bool EnteredCollider;
+        bool Entered;
         bool inPLane;
         
 
