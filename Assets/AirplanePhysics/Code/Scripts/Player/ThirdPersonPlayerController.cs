@@ -20,7 +20,9 @@ namespace Qubitech
         public float RotationSpeed = 15f;
         Animator anim;
         float mspeedY = 0f;
-        float mGravity = -9.81f;
+        float mGravity = -1f;
+        bool mjumping = false;
+        public float jumpSpeed = 0.05f;
 
 
         #endregion
@@ -38,6 +40,15 @@ namespace Qubitech
         void Update()
         {
             characterInput();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //mjumping = true;
+                //anim.SetTrigger("Jump");
+                Debug.Log("Jump pressed");
+                mspeedY += jumpSpeed * 0.2f;
+
+
+            }
         }
 
         #endregion
@@ -48,16 +59,30 @@ namespace Qubitech
         {
             float x = Input.GetAxisRaw("Horizontal");
             float z = Input.GetAxisRaw("Vertical");
+
+            
+
             if (!controller.isGrounded)
             {
                 mspeedY += mGravity * Time.deltaTime;
+               
+
             }
-            else
+            else //if
             {
-                Debug.Log("Grounded!");
+                
                 mspeedY = 0f;
             }
-
+           /* anim.SetFloat("SpeedY",mspeedY/ jumpSpeed);
+            if(mjumping && mspeedY < 0)
+            {
+                RaycastHit hit;
+                if(Physics.Raycast(transform.position,Vector3.down,out hit, .5f, LayerMask.GetMask("Default")))
+                {
+                    mjumping = false;
+                    anim.SetTrigger("Land");
+                }
+            }*/
 
 
             Vector3 movement = new Vector3(x, 0f, z).normalized;
